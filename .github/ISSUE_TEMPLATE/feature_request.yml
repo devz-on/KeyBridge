@@ -1,0 +1,18 @@
+name: Feature request
+description: Propose an improvement or discuss a larger change before implementation.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and where does the current behavior fall short?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the behavior, alternatives and any compatibility or security implications.
+    validations:
+      required: true

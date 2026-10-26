@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible problem with KeyBridge.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "For vulnerabilities, use private security reporting. Do not include credentials, raw CTAP messages, device serials, account data or unredacted logs."
+  - type: input
+    id: version
+    attributes:
+      label: KeyBridge version
+      placeholder: "Windows 0.1.2 / Android 0.1.2"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Windows build, phone model/Android version, browser, driver version and USB or wireless ADB. Omit serials and network addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the expected result and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Checks or redacted diagnostics
+      description: Which readiness checks pass or fail? Screenshots are useful after removing account and device identifiers.

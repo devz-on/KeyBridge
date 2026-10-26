@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KeyBridge · Local WebAuthn diagnostic</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header><span class="brand">KeyBridge</span><span class="tag">LOCAL DIAGNOSTIC</span></header>
+    <h1>Test the whole bridge.</h1>
+    <p class="lead">Ask Windows for a real security-key credential, then verify its assertion signature locally.</p>
+    <section class="notice" aria-label="Diagnostic scope">
+      <strong>This is a test harness, not a production relying party or server login.</strong>
+      <p>Public credential state lives only in this page’s memory. No data is sent to a cloud service. Requests use <code>localhost</code>, ES256, and required user verification.</p>
+    </section>
+    <section>
+      <h2>Before you start</h2>
+      <ol>
+        <li>Connect your Android phone through USB, open KeyBridge, and start its connection service.</li>
+        <li>Pair the Windows companion, start its USB/IP backend, and attach through a verified compatible signed driver.</li>
+        <li>Confirm the KeyBridge FIDO HID interface in Windows. This page cannot inspect the driver or identify an authenticator from none attestation.</li>
+        <li>Choose the USB security key in the Windows prompt. Inspect each request on the phone and approve it yourself.</li>
+      </ol>
+      <p class="muted">Without an attached, working virtual key, browser use remains unverified. A successful signature alone cannot prove that KeyBridge or Android created it; confirm the phone prompt and companion activity too.</p>
+    </section>
+    <section aria-labelledby="actions-title">
+      <h2 id="actions-title">Registration → authentication</h2>
+      <p id="availability">Checking browser context…</p>
+      <div class="actions">
+        <button id="register" disabled>1 · Register test credential</button>
+        <button id="authenticate" disabled>2 · Authenticate &amp; verify</button>
+        <button id="cancel" class="secondary" disabled>Cancel request</button>
+        <button id="clear-state" class="secondary" disabled>Clear page test state</button>
+      </div>
+      <p class="muted">Registration prefers a discoverable credential. Authentication supplies the registered credential ID. This does not test discoverable account selection. Clearing page state does not delete the credential from Android; delete the <code>localhost</code> test credential in its vault when finished.</p>
+    </section>
+    <section id="result" class="result" role="status" aria-live="polite">
+      <span id="result-label" class="tag">NOT TESTED</span>
+      <h2 id="result-title">No browser operation has run.</h2>
+      <p id="result-detail">Registration and authentication require your explicit actions.</p>
+    </section>
+    <section>
+      <h2>Public test state</h2>
+      <dl>
+        <div><dt>Credential</dt><dd id="credential">None in page memory</dd></div>
+        <div><dt>Algorithm</dt><dd>ES256 · P-256 · SHA-256</dd></div>
+        <div><dt>Attestation</dt><dd id="attestation">Not tested</dd></div>
+        <div><dt>Signature counter</dt><dd id="counter">Not available</dd></div>
+        <div><dt>Verified assertions</dt><dd id="assertions">0</dd></div>
+      </dl>
+    </section>
+    <section><h2>Session events</h2><ol id="events" class="events" role="log" aria-live="polite"><li>No events yet.</li></ol></section>
+    <footer>Diagnostic source and verification limits are documented in <code>tests/webauthn/README.md</code>. No FIDO certification is claimed.</footer>
+  </main>
+</body>
+</html>

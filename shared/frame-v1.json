@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "description": "CTAP GetInfo request, request ID 1",
+  "kind": 3,
+  "requestId": 1,
+  "payloadHex": "04",
+  "frameHex": "4B42524701030000000000010000000104"
+}

@@ -1,0 +1,15 @@
+KeyBridge 0.1.2 development setup
+
+Included: Windows x64 companion and .NET runtime, ADB 37.0.1 with its Windows libraries and notices, offline WebAuthn diagnostic, Android debug APK, and the original signed usbip-win2 0.9.8.1 driver installer.
+
+No browser extension or separate .NET installation is required. Android Studio and Java are only needed to build from source.
+
+The companion and ADB install for the current user. After the companion installation completes, Finish opens the selected USB/IP driver installer if needed. The KeyBridge wizard hides while the driver runs. It may briefly interrupt USB devices and request a manual restart. Automatic restart is prevented. Windows security protections remain unchanged.
+
+Phone USB drivers vary by manufacturer. Windows normally supplies the required interface driver; if your phone is not detected over USB, install its manufacturer's signed driver or use Android's already-authorized wireless debugging. Setup does not install generic unsigned phone drivers.
+
+Desktop shortcuts are selected by default. After installation, open KeyBridge on your phone and start its bridge. In the companion's Connection screen, select the phone, install the bundled APK if needed, connect, compare pairing fingerprints, and enable the Windows security key. Approve credential operations on your phone.
+
+Uninstalling the companion keeps its settings, paired identity, phone credentials, shared ADB server and separately installed USB/IP driver. Remove the shared driver through its own Windows uninstall entry only when no other software needs it. Do not uninstall/reset the Android app to update it: this destroys credential keys.
+
+This is a development release. The KeyBridge setup executable is not production code-signed. Its bundled USB/IP driver installer retains the verified upstream signatures. FIDO certification and an independent security audit remain outstanding.
