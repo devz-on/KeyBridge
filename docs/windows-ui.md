@@ -31,4 +31,6 @@ Closing normally disposes the bridge. With Keep in tray enabled, close hides it;
 
 ## Verification scope
 
-The 0.1.2 Release/native publish compiled successfully. Earlier 0.1.0 visual inspection covered eight pages, theme and reduced motion; it does not establish visual acceptance for the new layout. The 0.1.2 desktop visual pass was stopped by the user's Escape input, so further Windows UI input was stopped. Full new-layout visual/DPI/accessibility and installer fresh-machine testing remain outstanding. The Android navigation changes were checked separately on the physical phone as recorded in verification.md.
+The 0.1.2 native Release build and self-contained publish passed. The standard-size Connection and Checks layouts were inspected with the shared icon and default attachment option. The physical USB phone reconnected using the existing pinned identity, the updated phone reported strong biometrics/TEE storage, the virtual key attached, and Checks reached Ready to use with Windows FIDO HID detection.
+
+This readiness test did not perform a new signing ceremony. Earlier real browser registration/assertion evidence is recorded separately. Other DPI/text sizes, complete accessibility coverage and fresh-PC driver installation remain outstanding.

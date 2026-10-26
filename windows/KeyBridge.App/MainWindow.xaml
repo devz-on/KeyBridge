@@ -4,7 +4,7 @@
     <Border Background="#232038" Padding="18,26,18,20">
       <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Top" Margin="6,0,0,28">
-          <StackPanel Orientation="Horizontal"><Image Source="KeyBridge.ico" Width="36" Height="36" Margin="0,0,10,0" /><TextBlock Text="KeyBridge" Foreground="#F8F6FF" FontSize="25" FontWeight="SemiBold" VerticalAlignment="Center" /></StackPanel>
+          <StackPanel Orientation="Horizontal"><Image Source="KeyBridge.png" Width="36" Height="36" Margin="0,0,10,0" /><TextBlock Text="KeyBridge" Foreground="#F8F6FF" FontSize="25" FontWeight="SemiBold" VerticalAlignment="Center" /></StackPanel>
         </StackPanel>
         <TextBlock DockPanel.Dock="Bottom" Text="KeyBridge 0.1.2" FontSize="11" Foreground="#9790AB" Margin="6,18,0,0" /><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel x:Name="Navigation" /></ScrollViewer>
       </DockPanel>

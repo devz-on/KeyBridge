@@ -19,6 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="KeyBridge.ico" />
+    <Resource Include="../../assets/keybridge.png" Link="KeyBridge.png" />
     <ProjectReference Include="../KeyBridge.Core/KeyBridge.Core.csproj" />
     <ProjectReference Include="../KeyBridge.Usb/KeyBridge.Usb.csproj" />
   </ItemGroup>
