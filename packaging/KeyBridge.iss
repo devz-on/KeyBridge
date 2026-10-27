@@ -22,6 +22,7 @@ AppPublisher=KeyBridge contributors
 DefaultDirName={localappdata}\Programs\KeyBridge
 DefaultGroupName=KeyBridge
 DisableProgramGroupPage=yes
+UsePreviousTasks=no
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64os
 ArchitecturesInstallIn64BitMode=x64os
@@ -44,7 +45,10 @@ AppMutex=Local\KeyBridge.Desktop.UpgradeGuard
 UninstallDisplayName=KeyBridge
 
 [Tasks]
-Name: desktopicon; Description: "Create a desktop shortcut"; Flags: checkedonce
+Name: desktopicon; Description: "Create a desktop shortcut"
+
+[InstallDelete]
+Type: files; Name: "{app}\android\KeyBridge-debug.apk"
 
 [Files]
 Source: "{#PayloadRoot}\*"; DestDir: "{app}"; Excludes: "Install.ps1,Uninstall.ps1"; Flags: ignoreversion recursesubdirs createallsubdirs

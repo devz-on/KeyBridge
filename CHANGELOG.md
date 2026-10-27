@@ -5,6 +5,7 @@
 - Fixed the README sequence diagram's Mermaid parsing error.
 - Published Android builds use a dedicated release signing key and disable debugging. The APK includes a signing lineage for migration from the original maintainer development identity (physical migration verification pending).
 - Windows setup bundles the same signed release APK as the standalone download. Packaging rejects debug signing and debuggable APKs.
+- Setup keeps the desktop shortcut selected by default during upgrades and removes its obsolete bundled debug APK.
 
 ## 0.1.2
 
