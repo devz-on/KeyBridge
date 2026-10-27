@@ -19,7 +19,7 @@ The minimum Android API is 30; this build targets API 36. Use a strong screen lo
 Select the phone in the companion's Connection screen and choose Install Android APK, or use:
 
 ```powershell
-adb -d install -r artifacts/android/KeyBridge-debug.apk
+adb -d install -r artifacts/android/KeyBridge-release.apk
 adb -d shell am start -n dev.keybridge.android/.MainActivity
 ```
 
@@ -61,7 +61,7 @@ Use the local test page in `tests/webauthn` or [webauthn.io](https://webauthn.io
 
 ## Releases and signing
 
-Android debug APKs use the developer's standard debug key and are for testing. Build an unsigned release using `android/gradlew.bat :app:assembleRelease`. Sign the resulting APK outside the repository with Android SDK `apksigner`, an independently protected release keystore and the official signing procedure. Verify with `apksigner verify --verbose`. Keep keystore files/passwords outside Git; there is no embedded release private key.
+Published Android APKs use the release variant with debugging disabled and a dedicated signing key. Build an unsigned release using `android/gradlew.bat :app:assembleRelease`, then use `scripts/Sign-AndroidRelease.ps1` with a protected signing identity. The official APK includes a predecessor signing lineage for the original maintainer development build. See [release signing](release-signing.md) for the certificate fingerprint, verification commands, migration limits and maintainer procedure. Keep private keys and passwords outside Git.
 
 Windows is published with `dotnet publish`, not a kernel driver build. Sign published executables/MSIX or an installer with your own trusted release certificate in your release system. Do not present unsigned development binaries as publisher verified. The portable install/uninstall scripts are source-reviewable and do not replace commercial installer certification.
 

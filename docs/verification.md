@@ -1,6 +1,12 @@
 # Verification and acceptance record
 
-Date: **2026-10-26**, Asia/Kolkata. This records executed observations separately from source implementation. No FIDO certification or independent security audit has occurred.
+Updated: **2026-10-27**, Asia/Kolkata. This records executed observations separately from source implementation. No FIDO certification or independent security audit has occurred.
+
+## 0.1.2 signed Android packaging
+
+- The release variant (version code 4) compiled successfully, including release lint. Android JVM tests passed. Debugging is explicitly disabled and the built manifest has no `application-debuggable` flag.
+- Android SDK `apksigner` verified the dedicated KeyBridge release certificate and v3 APK signatures for API 30, 31, 33 and 36. The embedded signing lineage matches the original development certificate and the published release certificate. Installed-data migration is enabled and predecessor rollback is disabled. The signing script rejected a debuggable APK before invoking signing.
+- The physical phone was unavailable for the release-key migration. The earlier version-code-3 UI and readiness results below remain valid for their tested build; they do not establish that the signed version-code-4 APK has updated the phone. No uninstall, data reset or credential operation was attempted for this packaging change.
 
 ## 0.1.2 interface and release verification
 
@@ -73,7 +79,7 @@ Synthetic credential keys/public responses appear only in test fixtures. Product
 | Physical unplug gracefully disables auth | **Not yet tested** | Software disconnect/cancel/USB-IP shutdown tests pass; physical operation-in-flight test remains |
 | UI navigation and controls | **Partly verified** | All eight native Windows pages inspected; light/dark/reduced motion; Android onboarding/dashboard/security observed. Full paired-device controls, accessibility/DPI and all error/recovery flows require more testing |
 | Automated tests | **Verified within scope** | Counts above; Gradle UTP reporting failure explicitly retained |
-| Documented installations/build artifacts | **Verified within scope** | Built APK and Windows binaries/packages; user-approved signed driver installation/loading tested. Release signing and full uninstall remain untested |
+| Documented installations/build artifacts | **Verified within scope** | Built APK and Windows binaries/packages; user-approved signed driver installation/loading tested. Android release signature verified locally; physical release-key migration and full uninstall remain untested |
 
 ## Deliberate capability limits
 

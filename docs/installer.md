@@ -14,7 +14,7 @@ The upstream command uses `/NORESTART /RESTARTEXITCODE=3010 /TYPE=compact /TASKS
 
 - Self-contained Windows companion, CLI and diagnostic server, including the .NET runtime.
 - ADB 37.0.1: `adb.exe`, `AdbWinApi.dll`, `AdbWinUsbApi.dll`, `libwinpthread-1.dll`, `NOTICE.txt` and `source.properties`.
-- The matching Android development APK. Choose the intended phone in Connection to install it; setup never chooses an arbitrary phone.
+- The matching signed Android release APK, with debugging disabled. Choose the intended phone in Connection to install it; setup never chooses an arbitrary phone.
 - The unchanged official signed usbip-win2 0.9.8.1 installer.
 - Project/dependency licenses and setup, architecture and verification documentation.
 
@@ -38,7 +38,7 @@ The selected ADB files keep the complete Platform Tools notices. Google's [SDK t
 
 ## Build
 
-Install official [Inno Setup 6.7.3](https://jrsoftware.org/isdl.php), then run:
+Install official [Inno Setup 6.7.3](https://jrsoftware.org/isdl.php), configure the protected Android [release signing identity](release-signing.md), then run:
 
 ```powershell
 .\scripts\Build-Installer.ps1

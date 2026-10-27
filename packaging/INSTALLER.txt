@@ -1,6 +1,6 @@
 KeyBridge 0.1.2 development setup
 
-Included: Windows x64 companion and .NET runtime, ADB 37.0.1 with its Windows libraries and notices, offline WebAuthn diagnostic, Android debug APK, and the original signed usbip-win2 0.9.8.1 driver installer.
+Included: Windows x64 companion and .NET runtime, ADB 37.0.1 with its Windows libraries and notices, offline WebAuthn diagnostic, signed Android release APK, and the original signed usbip-win2 0.9.8.1 driver installer.
 
 No browser extension or separate .NET installation is required. Android Studio and Java are only needed to build from source.
 

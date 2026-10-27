@@ -2,7 +2,7 @@
 
 This is the self-contained Windows x64 development package. Extract the ZIP completely; no .NET installation is required to run the bundled programs.
 
-1. Install the matching Android APK, open KeyBridge on the phone, and tap **Start bridge**. Existing credentials/pairings survive an `adb install -r` update using the same debug signing identity; do not uninstall the phone app.
+1. Install the matching signed Android release APK, open KeyBridge on the phone, and tap **Start bridge**. Use `adb install -r` for updates with the same signing identity or its authorized successor; do not uninstall the phone app. See `docs/release-signing.md` for migration from the original development build.
 2. Run `app/KeyBridge.exe`. In Settings, point ADB to your official Platform Tools. For authorized wireless debugging, enable its explicit option. Set the signed USB/IP client path, normally `C:\Program Files\USBip\usbip.exe`.
 3. Open Connection, select your online phone and Connect. An existing pinned phone is recognized even when its ADB routing name changes. First use requires comparing all 64 fingerprint characters on both devices and approving locally.
 4. Stay on Connection and click **Enable security key**. It starts the backend and attaches the device in one action. Windows must report a healthy **HID-compliant fido**. Use Disconnect to stop and detach.

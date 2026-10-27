@@ -13,6 +13,9 @@ artifacts/
 *.pfx
 *.jks
 *.keystore
+*.p12
+*.dpapi.xml
+*.idsig
 *.log
 *.hprof
 android/captures/

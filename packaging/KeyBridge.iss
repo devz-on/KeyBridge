@@ -5,7 +5,7 @@
   #error DependencyRoot must point to the verified prerequisite directory
 #endif
 #ifndef AndroidApk
-  #error AndroidApk must point to the built, signed debug APK
+  #error AndroidApk must point to the built, signed release APK
 #endif
 #ifndef CompilerLicense
   #error CompilerLicense must point to Inno Setup's License.txt
@@ -51,7 +51,7 @@ Source: "{#PayloadRoot}\*"; DestDir: "{app}"; Excludes: "Install.ps1,Uninstall.p
 Source: "{#DependencyRoot}\adb\*"; DestDir: "{app}\platform-tools"; Flags: ignoreversion
 Source: "{#DependencyRoot}\usbip-LICENSE.txt"; DestDir: "{app}\licenses"; Flags: ignoreversion
 Source: "{#CompilerLicense}"; DestDir: "{app}\licenses"; DestName: "InnoSetup.txt"; Flags: ignoreversion
-Source: "{#AndroidApk}"; DestDir: "{app}\android"; DestName: "KeyBridge-debug.apk"; Flags: ignoreversion
+Source: "{#AndroidApk}"; DestDir: "{app}\android"; DestName: "KeyBridge-release.apk"; Flags: ignoreversion
 Source: "{#DependencyRoot}\USBip-0.9.8.1-x64.exe"; Flags: dontcopy
 
 [Icons]

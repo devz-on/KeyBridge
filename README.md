@@ -21,10 +21,10 @@ Those results cover the recorded development configuration, not every phone, bro
 | Package | Purpose |
 | --- | --- |
 | [Windows setup](https://github.com/devz-on/KeyBridge/releases/download/v0.1.2/KeyBridge-0.1.2-Setup-x64.exe) | Companion, private ADB tools, .NET runtime, offline test page, phone APK and original signed USB/IP driver installer |
-| [Android APK](https://github.com/devz-on/KeyBridge/releases/download/v0.1.2/KeyBridge-0.1.2-android-debug.apk) | Installable development APK; also included in Windows setup |
+| [Android APK](https://github.com/devz-on/KeyBridge/releases/download/v0.1.2/KeyBridge-0.1.2-android-release.apk) | Signed, non-debuggable release APK; also included in Windows setup |
 | [SHA-256 checksums](https://github.com/devz-on/KeyBridge/releases/download/v0.1.2/SHA256SUMS.txt) | Integrity checks for the published downloads |
 
-The KeyBridge Windows setup itself is currently unsigned. The included third-party driver retains its upstream signatures. The Android APK uses development signing. Neither package should be presented as a production-signed release.
+The Android release APK is signed with a dedicated KeyBridge release key, with debugging disabled. Its certificate SHA-256 is `A95FBB8CBD9CF0D2ABB33C8842BA1B1C516DD3D9F3F9F8C31D1CF19D4B4D3649`. The Windows setup itself is currently unsigned; the included third-party driver retains its upstream signatures. KeyBridge remains a development preview.
 
 ## Requirements
 
@@ -48,7 +48,7 @@ Running the release packages does not require Android Studio, Java, Node.js or a
 
 For the included offline test, run `Run-WebAuthn-Diagnostic.cmd` from the installed directory and open `http://localhost:8787` in Chrome. The page checks the challenge, origin, RP hash, credential/user identity, UP/UV flags, counter policy and ES256 signature. No simulated authenticator is used.
 
-**Updating Android:** use an update signed with the same identity (`adb install -r`). Uninstalling or resetting the app destroys its Keystore credentials. A developer's own debug build will usually have a different signing identity from the published development APK.
+**Updating Android:** use `adb install -r` with the official release APK. It includes a signing lineage from the original maintainer development identity to the release key. This supports an in-place migration on supported Android versions; the first physical migration has not yet been checked. Uninstalling or resetting the app destroys its Keystore credentials. Unrelated debug builds have different signing identities and cannot use this migration.
 
 ## How it works
 
@@ -80,9 +80,9 @@ sequenceDiagram
     Browser->>PC: WebAuthn registration or assertion
     PC->>Phone: CTAP request over paired mutual TLS
     Phone->>Phone: Validate request and select local account
-    Phone->>Phone: Show RP and account; request fingerprint
+    Phone->>Phone: Show RP and account, request fingerprint
     Phone->>Key: Operation-bound biometric signature
-    Key-->>Phone: Signature; private key stays on phone
+    Key-->>Phone: Signature, private key stays on phone
     Phone-->>PC: CTAP response
     PC-->>Browser: FIDO HID response
     Browser->>Browser: Verify WebAuthn bindings and signature
@@ -128,7 +128,7 @@ $env:ANDROID_HOME = 'C:\path\to\Android\Sdk'
 .\scripts\Build-Installer.ps1
 ```
 
-`Package.ps1` creates the portable Windows package, an installable debug APK and an explicitly unsigned Android release variant. `Build-Installer.ps1` builds those outputs, verifies the official prerequisites and writes setup under `artifacts/releases/0.1.2/`. Pass `-IsccPath` for a nonstandard compiler location or `-SkipPackage` after packaging current binaries.
+`Package.ps1` creates the portable Windows package and Android development outputs. For distribution, configure a protected signing identity and run `Package.ps1 -SignAndroid`; see [release signing](docs/release-signing.md). `Build-Installer.ps1` requires the signed, non-debuggable release APK, verifies the official prerequisites and writes setup under `artifacts/releases/0.1.2/`. Pass `-IsccPath` for a nonstandard compiler location or `-SkipPackage` after packaging current binaries. CI compiles both Android variants without access to the private release key.
 
 On Linux, the platform-independent Android module can be built with JDK 21 and an Android SDK:
 

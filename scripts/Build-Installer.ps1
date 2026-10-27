@@ -19,7 +19,7 @@ if (!$IsccPath) {
 if (!$IsccPath -or !(Test-Path -LiteralPath $IsccPath)) { throw 'Install official Inno Setup 6.7.3, or supply -IsccPath to its ISCC.exe. See docs/installer.md.' }
 $taskCompilerSignature = Get-AuthenticodeSignature -LiteralPath $IsccPath
 if ($taskCompilerSignature.Status -ne 'Valid' -or $taskCompilerSignature.SignerCertificate.Subject -notmatch 'O=Pyrsys B.V.') { throw 'Inno Setup compiler signature is not the expected valid Pyrsys B.V. publisher.' }
-if (!$SkipPackage) { & "$PSScriptRoot\Package.ps1" }
+if (!$SkipPackage) { & "$PSScriptRoot\Package.ps1" -SignAndroid }
 
 $taskAdbZip = Get-VerifiedPayload 'https://dl.google.com/android/repository/platform-tools_r37.0.1-win.zip' 'platform-tools_r37.0.1-win.zip' '45F4D63113E895EBDE0C90F194099A4676B6AC653BD28D54314A9E022BBC1A99'
 $taskDriver = Get-VerifiedPayload 'https://github.com/vadimgrn/usbip-win2/releases/download/v.0.9.8.1/USBip-0.9.8.1-x64.exe' 'USBip-0.9.8.1-x64.exe' '38CAD6D4432B52D5BB9409D9AD03B72FDFFC4ADA4CD3A48FBECA1A2752A8518A'
@@ -38,8 +38,14 @@ $taskOutput = Join-Path $script:RepositoryRoot 'artifacts'
 $taskSetupOutput = if ($OutputDirectory) { [IO.Path]::GetFullPath($OutputDirectory) } else { Join-Path $taskOutput 'releases\0.1.2' }
 New-Item -ItemType Directory -Force -Path $taskSetupOutput | Out-Null
 $taskWindows = Join-Path $taskOutput 'windows-0.1.2'
-$taskAndroid = Join-Path $taskOutput 'android\KeyBridge-debug.apk'
+$taskAndroid = Join-Path $taskOutput 'android\KeyBridge-release.apk'
 if (!(Test-Path -LiteralPath "$taskWindows\app\KeyBridge.exe") -or !(Test-Path -LiteralPath $taskAndroid)) { throw 'Run Package.ps1 to build the Windows package and Android APK first.' }
+Set-KeyBridgeAndroidEnvironment
+$taskSigner = Join-Path $env:ANDROID_HOME 'build-tools\36.0.0\lib\apksigner.jar'
+$taskApkVerification = & "$env:JAVA_HOME\bin\java.exe" -jar $taskSigner verify --verbose --print-certs $taskAndroid
+if ($LASTEXITCODE -ne 0 -or ($taskApkVerification -match '^Signer #\d+ certificate DN: .*CN=Android Debug')) { throw 'Setup requires a verified APK signed with a dedicated release identity.' }
+$taskApkBadging = & "$env:ANDROID_HOME\build-tools\36.0.0\aapt2.exe" dump badging $taskAndroid
+if ($LASTEXITCODE -ne 0 -or ($taskApkBadging -match '^application-debuggable')) { throw 'Setup cannot bundle a debuggable APK.' }
 & $IsccPath "/DPayloadRoot=$taskWindows" "/DDependencyRoot=$taskDependencies" "/DAndroidApk=$taskAndroid" "/DCompilerLicense=$taskCompilerLicense" "/DOutputRoot=$taskSetupOutput" "$script:RepositoryRoot\packaging\KeyBridge.iss"
 if ($LASTEXITCODE -ne 0) { throw "Inno Setup compilation failed ($LASTEXITCODE)." }
 Get-ChildItem -LiteralPath $taskOutput -File -Recurse | Where-Object { $_.Extension -in '.zip','.apk','.exe' } | Get-FileHash -Algorithm SHA256 | ForEach-Object { "$($_.Hash)  $($_.Path.Substring($taskOutput.Length + 1))" } | Set-Content -LiteralPath "$taskOutput\SHA256SUMS.txt"

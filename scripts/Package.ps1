@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([switch]$SkipAndroid)
+param([switch]$SkipAndroid, [switch]$SignAndroid)
 . "$PSScriptRoot\Environment.ps1"
 $taskOutput = Join-Path $script:RepositoryRoot 'artifacts'
 $taskWindows = Join-Path $taskOutput 'windows-0.1.2'
@@ -24,6 +24,7 @@ try {
         New-Item -ItemType Directory -Force -Path $taskAndroid | Out-Null
         Copy-Item -LiteralPath '.\android\app\build\outputs\apk\debug\app-debug.apk' -Destination "$taskAndroid\KeyBridge-debug.apk"
         Copy-Item -LiteralPath '.\android\app\build\outputs\apk\release\app-release-unsigned.apk' -Destination "$taskAndroid\KeyBridge-release-unsigned.apk"
+        if ($SignAndroid) { & "$PSScriptRoot\Sign-AndroidRelease.ps1" }
         Copy-Item -LiteralPath '.\packaging\ANDROID.md' -Destination "$taskAndroid\README.md" -Force
     }
     Compress-Archive -Path "$taskWindows\*" -DestinationPath "$taskOutput\KeyBridge-0.1.2-windows-x64.zip" -Force
